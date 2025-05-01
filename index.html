@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Calculadora científica con funciones avanzadas y modo oscuro">
+  <meta name="keywords" content="calculadora, científica, matemáticas, funciones">
+  <meta name="author" content="Tu Nombre">
+  <title>Calculadora Científica | Herramienta Matemática Avanzada</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-content">
+      <h1>Calculadora Científica</h1>
+      <div class="header-controls">
+        <button id="toggle-theme" aria-label="Cambiar tema">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+            <path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"/>
+          </svg>
+        </button>
+        <button id="toggle-music" aria-label="Reproducir/Pausar música">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+            <path d="M400-120q-66 0-113-47t-47-113q0-66 47-113t113-47q23 0 42.5 5.5T480-418v-422h240v160H560v400q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T480-280v-400h120v-80H480v-120h-80v600q0 33 23.5 56.5T400-200Zm0-240Z"/>
+          </svg>
+        </button>
+        <div class="volume-control">
+          <input type="range" 
+                 id="volume-slider" 
+                 min="0" 
+                 max="100" 
+                 value="20" 
+                 aria-label="Control de volumen"
+                 class="volume-slider">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="calculator-container">
+    <div class="calculator" role="application" aria-label="Calculadora científica">
+      <div class="display-container">
+        <input type="text" 
+               id="pantalla" 
+               readonly 
+               aria-label="Pantalla de la calculadora"
+               class="calculator-display" />
+      </div>
+
+      <div class="buttons-grid">
+        <!-- Grupo de funciones científicas -->
+        <div class="scientific-functions">
+          <button onclick="agregar('(')" class="function-btn" aria-label="Paréntesis izquierdo">(</button>
+          <button onclick="agregar(')')" class="function-btn" aria-label="Paréntesis derecho">)</button>
+          <button onclick="agregar('sin(')" class="function-btn" aria-label="Función seno">sin</button>
+          <button onclick="agregar('cos(')" class="function-btn" aria-label="Función coseno">cos</button>
+          <button onclick="agregar('tan(')" class="function-btn" aria-label="Función tangente">tan</button>
+          <button onclick="agregar('log(')" class="function-btn" aria-label="Función logaritmo">log</button>
+          <button onclick="agregar('√(')" class="function-btn" aria-label="Función raíz cuadrada">√</button>
+          <button onclick="agregar('^')" class="function-btn" aria-label="Función exponente">^</button>
+        </div>
+
+        <div class="calculator-main">
+          <div class="numbers-grid">
+            <button onclick="agregar('7')" class="number-btn">7</button>
+            <button onclick="agregar('8')" class="number-btn">8</button>
+            <button onclick="agregar('9')" class="number-btn">9</button>
+            <button onclick="agregar('4')" class="number-btn">4</button>
+            <button onclick="agregar('5')" class="number-btn">5</button>
+            <button onclick="agregar('6')" class="number-btn">6</button>
+            <button onclick="agregar('1')" class="number-btn">1</button>
+            <button onclick="agregar('2')" class="number-btn">2</button>
+            <button onclick="agregar('3')" class="number-btn">3</button>
+            <button onclick="agregar('0')" class="number-btn">0</button>
+            <button onclick="agregar('.')" class="number-btn" aria-label="Punto decimal">.</button>
+            <button onclick="calcular()" class="equals-btn" aria-label="Calcular">=</button>
+          </div>
+
+          <div class="operations-grid">
+            <button onclick="agregar('/')" class="operator-btn" aria-label="Dividir">/</button>
+            <button onclick="agregar('*')" class="operator-btn" aria-label="Multiplicar">×</button>
+            <button onclick="agregar('-')" class="operator-btn" aria-label="Restar">-</button>
+            <button onclick="agregar('+')" class="operator-btn" aria-label="Sumar">+</button>
+          </div>
+        </div>
+
+        <!-- Grupo de controles -->
+        <div class="control-buttons">
+          <button onclick="borrar()" class="clear-btn" aria-label="Borrar último dígito">C</button>
+          <button onclick="borrarTodo()" class="clear-all-btn" aria-label="Borrar todo">AC</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="history-section" aria-label="Historial de operaciones">
+      <h2>Últimas operaciones</h2>
+      <ul id="lista-historial" class="history-list"></ul>
+      <button onclick="borrarHistorial()" class="clear-history-btn">Borrar historial</button>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <p>&copy; 2025 - Calculadora estilo Casio</p>
+  </footer>
+
+  <!-- Elementos de audio -->
+  <audio id="audio-click" src="sonidos/sonido2.mp3" preload="auto"></audio>
+  <audio id="audio-musica" src="sonidos/sonido1.mp3" loop preload="auto"></audio>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
